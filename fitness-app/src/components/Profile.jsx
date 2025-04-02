@@ -2,7 +2,7 @@ import React from "react";
 
 const Profile = () => {
   const user = {
-    name: "John Doe",
+    name: "Emmanuel Madwendwe",
     age: 28,
     height: "5'10\"",
     weight: "75kg",
