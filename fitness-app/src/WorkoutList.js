@@ -1,12 +1,15 @@
-// WorkoutList.jsx
 import React from 'react';
 
 const WorkoutList = ({ workouts }) => {
+  if (!workouts || workouts.length === 0) {
+    return <p>No workouts available</p>;
+  }
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      {workouts.map((workout, index) => (
-        <div key={index} className="p-4 bg-white shadow-md rounded-lg">
-          <h3 className="text-lg font-bold">{workout.name}</h3>
+    <div>
+      {workouts.map(workout => (
+        <div key={workout.id}>
+          <h3>{workout.name}</h3>
           <p>{workout.description}</p>
         </div>
       ))}

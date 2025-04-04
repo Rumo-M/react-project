@@ -1,15 +1,21 @@
-// FetchWorkouts.jsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import axios from 'axios';
 
-const FetchWorkouts = ({ setWorkouts }) => {
+const FetchWorkouts = ({ setWorkouts, setLoading }) => {
   useEffect(() => {
-    axios.get('https://api.Rumo1healthwellness.com/workouts')
-      .then(response => setWorkouts(response.data))
-      .catch(error => console.error(error));
-  }, [setWorkouts]);
+    setLoading(true);
+    axios.get('/api/workouts')  // Replace with the correct API endpoint
+      .then(response => {
+        setWorkouts(response.data);
+        setLoading(false);
+      })
+      .catch(error => {
+        console.error('Error fetching workouts:', error);
+        setLoading(false);
+      });
+  }, [setWorkouts, setLoading]);
 
-  return null;
+  return null;  // No UI, it just fetches data
 };
 
 export default FetchWorkouts;

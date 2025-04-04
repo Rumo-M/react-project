@@ -20,6 +20,7 @@ const App = () => {
   const [meals, setMeals] = useState([]);
   const [meditations, setMeditations] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);  // For loading state
 
   return (
     <Router>
@@ -45,8 +46,8 @@ const App = () => {
             path="/workout" 
             element={
               <div>
-                <FetchWorkouts setWorkouts={setWorkouts} />
-                <WorkoutList workouts={workouts} />
+                <FetchWorkouts setWorkouts={setWorkouts} setLoading={setLoading} />
+                {loading ? <p>Loading workouts...</p> : <WorkoutList workouts={workouts} />}
               </div>
             } 
           />
@@ -56,8 +57,8 @@ const App = () => {
             path="/nutrition" 
             element={
               <div>
-                <FetchMeals setMeals={setMeals} />
-                <MealPlanner meals={meals} />
+                <FetchMeals setMeals={setMeals} setLoading={setLoading} />
+                {loading ? <p>Loading meals...</p> : <MealPlanner meals={meals} />}
               </div>
             } 
           />
