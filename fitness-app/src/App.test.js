@@ -1,20 +1,17 @@
-// src/App.test.js
-import React from 'react';
-import { render, screen } from '@testing-library/react';
+// App.test.js
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('renders the app with the title', () => {
+test('renders Health & Wellness App heading', () => {
   render(<App />);
-  
-  // Check if the title is in the document
-  const titleElement = screen.getByText(/Health & Wellness Tracker/i);
-  expect(titleElement).toBeInTheDocument();
+  const heading = screen.getByText(/Health & Wellness App/i);
+  expect(heading).toBeInTheDocument();
 });
 
-test('renders the Profile component', () => {
+test('opens settings modal when button is clicked', () => {
   render(<App />);
-  
-  // Check if the Profile component exists (assuming you have some text in Profile component)
-  const profileElement = screen.getByText(/Profile/i); // Adjust this depending on Profile content
-  expect(profileElement).toBeInTheDocument();
+  const button = screen.getByText(/Open Settings/i);
+  fireEvent.click(button);
+  const settingsHeading = screen.getByText(/Settings/i);
+  expect(settingsHeading).toBeInTheDocument();
 });
