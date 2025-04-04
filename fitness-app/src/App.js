@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import Footer from './Footer';
 import Card from './Card';
 import Modal from './Modal';
@@ -10,7 +10,7 @@ import MealPlanner from './MealPlanner';
 import FetchWorkouts from './components/FetchWorkouts';
 import FetchMeals from './components/FetchMeals';
 import FetchMeditations from './components/FetchMeditations';
-import Home from './Home'; // Create different components for each section
+import Home from './Home';
 import Workout from './Workout';
 import Nutrition from './Nutrition';
 import Progress from './Progress';
@@ -19,7 +19,6 @@ const App = () => {
   const [workouts, setWorkouts] = useState([]);
   const [meals, setMeals] = useState([]);
   const [meditations, setMeditations] = useState([]);
-  const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -30,16 +29,18 @@ const App = () => {
         {/* Navigation Bar */}
         <nav>
           <ul className="flex justify-center space-x-4">
-            <li><a href="/">Home</a></li>
-            <li><a href="/workout">Workout</a></li>
-            <li><a href="/nutrition">Nutrition</a></li>
-            <li><a href="/progress">Progress</a></li>
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="/workout">Workout</Link></li>
+            <li><Link to="/nutrition">Nutrition</Link></li>
+            <li><Link to="/progress">Progress</Link></li>
           </ul>
         </nav>
 
         {/* Routes */}
         <Routes>
           <Route path="/" element={<Home />} />
+          
+          {/* Workout Route */}
           <Route 
             path="/workout" 
             element={
@@ -49,6 +50,8 @@ const App = () => {
               </div>
             } 
           />
+          
+          {/* Nutrition Route */}
           <Route 
             path="/nutrition" 
             element={
@@ -58,6 +61,8 @@ const App = () => {
               </div>
             } 
           />
+          
+          {/* Progress Route */}
           <Route 
             path="/progress" 
             element={
