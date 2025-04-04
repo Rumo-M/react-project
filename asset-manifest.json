@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.js": "/your-repo-name/static/js/main.6bcea760.js",
-    "index.html": "/your-repo-name/index.html",
-    "main.6bcea760.js.map": "/your-repo-name/static/js/main.6bcea760.js.map"
+    "main.js": "/M.github.io/react-project/static/js/main.6bcea760.js",
+    "index.html": "/M.github.io/react-project/index.html",
+    "main.6bcea760.js.map": "/M.github.io/react-project/static/js/main.6bcea760.js.map"
   },
   "entrypoints": [
     "static/js/main.6bcea760.js"
