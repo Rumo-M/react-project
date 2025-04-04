@@ -1,77 +1,84 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 const NutritionTracker = () => {
-  const [meals, setMeals] = useState([]);
-  const [meal, setMeal] = useState({ name: "", calories: "" });
+  const [meal, setMeal] = useState("");
+  const [calories, setCalories] = useState("");
+  const [protein, setProtein] = useState("");
+  const [carbs, setCarbs] = useState("");
+  const [fats, setFats] = useState("");
+  const [mealLog, setMealLog] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setMeal({
-      ...meal,
-      [name]: name === "calories" ? Number(value) : value, // Convert calories to number
-    });
+  const handleAddMeal = () => {
+    setMealLog([
+      ...mealLog,
+      { meal, calories, protein, carbs, fats }
+    ]);
+    setMeal(""); // Clear the input fields after adding
+    setCalories("");
+    setProtein("");
+    setCarbs("");
+    setFats("");
   };
-
-  const addMeal = () => {
-    if (!meal.name.trim() || meal.calories <= 0 || isNaN(meal.calories)) {
-      alert("Please enter a valid meal name and a positive calorie value.");
-      return;
-    }
-    setMeals([...meals, { ...meal, id: Date.now() }]);
-    setMeal({ name: "", calories: "" }); // Reset form
-  };
-
-  const removeMeal = (id) => {
-    setMeals(meals.filter((meal) => meal.id !== id));
-  };
-
-  const totalCalories = meals.reduce((sum, meal) => sum + meal.calories, 0);
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Nutrition Tracker</h2>
-      <div className="flex flex-col gap-2">
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4">Nutrition Tracker</h2>
+      <div className="mb-4">
         <input
           type="text"
-          name="name"
-          value={meal.name}
-          onChange={handleChange}
+          className="p-2 border rounded w-full mb-2"
           placeholder="Meal Name"
-          className="p-2 border rounded"
+          value={meal}
+          onChange={(e) => setMeal(e.target.value)}
         />
-        <input
-          type="number"
-          name="calories"
-          value={meal.calories}
-          onChange={handleChange}
-          placeholder="Calories"
-          className="p-2 border rounded"
-          min="1"
-        />
-        <button
-          onClick={addMeal}
-          className="bg-orange-500 text-white p-2 rounded"
-        >
-          Add Meal
-        </button>
+        <div className="grid grid-cols-4 gap-4">
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Calories"
+            value={calories}
+            onChange={(e) => setCalories(e.target.value)}
+          />
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Protein (g)"
+            value={protein}
+            onChange={(e) => setProtein(e.target.value)}
+          />
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Carbs (g)"
+            value={carbs}
+            onChange={(e) => setCarbs(e.target.value)}
+          />
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Fats (g)"
+            value={fats}
+            onChange={(e) => setFats(e.target.value)}
+          />
+        </div>
       </div>
+      <button
+        onClick={handleAddMeal}
+        className="bg-blue-500 text-white p-2 rounded"
+      >
+        Add Meal
+      </button>
 
-      <h3 className="text-xl font-semibold mt-4">Your Meals</h3>
-      <ul>
-        {meals.map((meal) => (
-          <li key={meal.id} className="flex justify-between items-center mb-2">
-            {meal.name} - {meal.calories} kcal
-            <button
-              onClick={() => removeMeal(meal.id)}
-              className="bg-red-500 text-white p-1 rounded ml-2"
-            >
-              Remove
-            </button>
-          </li>
-        ))}
-      </ul>
-
-      <h3 className="text-lg font-semibold mt-4">Total Calories: {totalCalories} kcal</h3>
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold">Meal Log</h3>
+        <ul className="list-disc pl-5">
+          {mealLog.map((item, index) => (
+            <li key={index} className="mb-2">
+              <strong>{item.meal}</strong> - {item.calories} kcal, {item.protein}g protein, {item.carbs}g carbs, {item.fats}g fats
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };

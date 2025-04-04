@@ -1,47 +1,116 @@
-// Workout.js
-import React, { useState, useEffect } from 'react';
-import WorkoutDetails from './WorkoutDetails'; // Importing the WorkoutDetails component for a selected workout
+import React, { useState } from 'react';
 
-const Workout = () => {
-  // Sample data: You can replace this with an API call
-  const workoutData = [
-    { id: 1, name: 'Push-ups', description: 'A great upper body workout.' },
-    { id: 2, name: 'Squats', description: 'Excellent for lower body strength.' },
-    { id: 3, name: 'Plank', description: 'Helps strengthen your core.' },
-    { id: 4, name: 'Burpees', description: 'Full-body exercise for fitness.' },
+const Nutrition = () => {
+  const [meal, setMeal] = useState("");
+  const [calories, setCalories] = useState("");
+  const [protein, setProtein] = useState("");
+  const [carbs, setCarbs] = useState("");
+  const [fats, setFats] = useState("");
+  const [mealLog, setMealLog] = useState([]);
+
+  // Sample pre-added meals
+  const defaultMeals = [
+    { meal: 'Grilled Chicken Salad', calories: 350, protein: 30, carbs: 10, fats: 20 },
+    { meal: 'Oatmeal with Berries', calories: 250, protein: 8, carbs: 40, fats: 5 },
+    { meal: 'Egg White Omelette', calories: 200, protein: 20, carbs: 5, fats: 10 },
+    { meal: 'Quinoa with Vegetables', calories: 300, protein: 10, carbs: 45, fats: 8 },
+    { meal: 'Protein Smoothie', calories: 350, protein: 25, carbs: 30, fats: 12 }
   ];
 
-  const [selectedWorkout, setSelectedWorkout] = useState(null);
-
-  useEffect(() => {
-    // Here, you would fetch workout data from an API if needed
-    // Example: fetch('/api/workouts').then(response => response.json()).then(data => setWorkouts(data));
-  }, []);
-
-  const handleWorkoutClick = (workout) => {
-    setSelectedWorkout(workout);
+  // Add custom meal to the log
+  const handleAddMeal = () => {
+    if (!meal || !calories || !protein || !carbs || !fats) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    setMealLog([
+      ...mealLog,
+      { meal, calories, protein, carbs, fats }
+    ]);
+    setMeal(""); // Clear input fields after adding
+    setCalories("");
+    setProtein("");
+    setCarbs("");
+    setFats("");
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-3xl font-bold mb-4">Available Workouts</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {workoutData.map((workout) => (
-          <div
-            key={workout.id}
-            className="bg-white p-4 rounded shadow hover:shadow-lg cursor-pointer"
-            onClick={() => handleWorkoutClick(workout)}
-          >
-            <h3 className="text-xl font-semibold">{workout.name}</h3>
-            <p>{workout.description}</p>
-          </div>
-        ))}
+    <div className="max-w-xl mx-auto p-6 bg-white shadow-lg rounded-lg">
+      <h2 className="text-2xl font-semibold mb-4">Nutrition Tracker</h2>
+
+      {/* Input form for adding meals */}
+      <div className="mb-4">
+        <input
+          type="text"
+          className="p-2 border rounded w-full mb-2"
+          placeholder="Meal Name"
+          value={meal}
+          onChange={(e) => setMeal(e.target.value)}
+        />
+        <div className="grid grid-cols-4 gap-4">
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Calories"
+            value={calories}
+            onChange={(e) => setCalories(e.target.value)}
+          />
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Protein (g)"
+            value={protein}
+            onChange={(e) => setProtein(e.target.value)}
+          />
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Carbs (g)"
+            value={carbs}
+            onChange={(e) => setCarbs(e.target.value)}
+          />
+          <input
+            type="number"
+            className="p-2 border rounded"
+            placeholder="Fats (g)"
+            value={fats}
+            onChange={(e) => setFats(e.target.value)}
+          />
+        </div>
       </div>
 
-      {/* Show workout details when a workout is selected */}
-      {selectedWorkout && <WorkoutDetails workout={selectedWorkout} />}
+      <button
+        onClick={handleAddMeal}
+        className="bg-blue-500 text-white p-2 rounded"
+      >
+        Add Meal
+      </button>
+
+      {/* Display the logged meals */}
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold">Meal Log</h3>
+        <ul className="list-disc pl-5">
+          {mealLog.map((item, index) => (
+            <li key={index} className="mb-2">
+              <strong>{item.meal}</strong> - {item.calories} kcal, {item.protein}g protein, {item.carbs}g carbs, {item.fats}g fats
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      {/* Display default meals */}
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold">Suggested Meals</h3>
+        <ul className="list-disc pl-5">
+          {defaultMeals.map((item, index) => (
+            <li key={index} className="mb-2">
+              <strong>{item.meal}</strong> - {item.calories} kcal, {item.protein}g protein, {item.carbs}g carbs, {item.fats}g fats
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 };
 
-export default Workout;
+export default Nutrition;
